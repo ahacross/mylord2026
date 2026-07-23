@@ -1,0 +1,633 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Icons+Outlined');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;500;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #f8fafc 0%, #e2e8f0 100%) no-repeat fixed;
+  color: #1e293b;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.seat-app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+/* --- 헤더 스타일 --- */
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.app-header .header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.app-header .header-content .logo-icon {
+  font-size: 2.4rem;
+  animation: pulse 2.5s infinite;
+}
+
+.app-header .gradient-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #059669 0%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.05em;
+  display: inline-block;
+}
+
+.app-header .subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* --- 메인 카드 컨테이너 --- */
+.card-container {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(148, 163, 184, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* --- 섹션 타이틀 --- */
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 16px;
+  background: #10b981;
+  border-radius: 2px;
+}
+
+/* --- 1. 정렬 방식 제어 (세그먼트 토글) --- */
+.segmented-control-wrapper {
+  display: flex;
+}
+
+.segmented-control {
+  display: flex;
+  background: rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 4px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.segmented-control button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.segmented-control button.active {
+  background: #10b981;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.segmented-control button:hover:not(.active) {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* --- 2. 행/열 설정 인풋 폼 --- */
+.input-grid {
+  width: 100%;
+}
+
+.input-group-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.input-group-both {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media screen and (max-width: 640px) {
+  .input-group-both {
+    grid-template-columns: 1fr;
+  }
+}
+
+.direction-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.direction-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.direction-badge.left {
+  background: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+}
+
+.direction-badge.right {
+  background: rgba(16, 185, 129, 0.08);
+  color: #059669;
+}
+
+.input-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 카드 내부 콘텐츠 가로 중앙 정렬 */
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 2px 8px rgba(148, 163, 184, 0.05);
+}
+
+.input-card .input-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  white-space: nowrap; /* 텍스트가 줄바꿈되어 잘리는 현상 방지 */
+}
+
+.input-card input[type='number'] {
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  outline: none;
+  width: 100%;
+  text-align: center; /* 입력창의 숫자 가로 정중앙 정렬 */
+  padding: 2px 0;
+}
+
+/* --- 3. 파트 선택 칩 --- */
+.parts-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 기본 상태는 한 행에 4개 모두 배치 */
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 580px; /* 지나친 가로 확장을 막기 위해 최대너비 설정 */
+}
+
+@media screen and (max-width: 600px) {
+  .parts-selector {
+    grid-template-columns: repeat(2, 1fr); /* 화면이 좁아져 넘칠 때는 2개씩 2줄(2x2)로 통일 */
+  }
+}
+
+.part-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: #475569;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.part-chip .part-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+/* 각 파트별 칩 색상 커스텀 */
+.part-chip.sop .part-indicator { background-color: #f87171; }
+.part-chip.alt .part-indicator { background-color: #fbbf24; }
+.part-chip.ten .part-indicator { background-color: #60a5fa; }
+.part-chip.bas .part-indicator { background-color: #34d399; }
+
+.part-chip:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #0f172a;
+}
+
+.part-chip.active {
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.part-chip.sop.active { background: #f87171; }
+.part-chip.alt.active { background: #fbbf24; }
+.part-chip.ten.active { background: #60a5fa; }
+.part-chip.bas.active { background: #34d399; }
+
+.part-chip.active .part-indicator {
+  background-color: #ffffff !important;
+  animation: beat 1.2s infinite alternate;
+}
+
+/* --- 4. 성가대 배치판 (보드 영역) --- */
+.board-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.board-header .badge {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #059669;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.board-header .board-tip {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 캡처를 뜨는 컨테이너 */
+.capture-container {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0; /* 틈새 갭 0 지정하여 좌우 대형 밀착 */
+  overflow-x: auto;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 스크롤바 스타일링 */
+.capture-container::-webkit-scrollbar {
+  height: 6px;
+}
+.capture-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+.capture-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --- 단방향 레이아웃 정렬 --- */
+.single-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  min-width: max-content;
+  margin: 0 auto;
+}
+
+.direction-bar {
+  background: rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 16px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.direction-bar.left {
+  border-radius: 8px 0 0 8px;
+  border-right: none;
+  flex: 1;
+}
+.direction-bar.middle {
+  border-radius: 0;
+  background: rgba(241, 245, 249, 0.9);
+  color: #94a3b8;
+  font-size: 0.75rem;
+  padding: 6px 8px;
+}
+.direction-bar.right {
+  border-radius: 0 8px 8px 0;
+  border-left: none;
+  flex: 1;
+}
+
+/* --- 양방향 분할 레이아웃 정렬 --- */
+.split-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  min-width: max-content;
+  margin: 0 auto;
+}
+
+.split-direction-headers {
+  display: flex;
+  width: 100%;
+  max-width: 580px;
+  margin-bottom: 24px;
+}
+
+.split-grid-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.split-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.split-pane.left-pane {
+  align-items: flex-end;
+}
+.split-pane.right-pane {
+  align-items: flex-start;
+}
+.split-pane.center-indexer-pane {
+  align-items: center;
+  min-width: 38px;
+}
+
+/* --- 공통 열 번호, 좌석 행 컨테이너 --- */
+.col-header-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  height: 20px;
+}
+
+.col-header-row.justify-start { justify-content: flex-start; }
+.col-header-row.justify-end { justify-content: flex-end; }
+.col-header-row.invisible-label {
+  visibility: hidden;
+}
+
+.col-number-label {
+  display: inline-block;
+  width: 44px;
+  text-align: center;
+  font-weight: 700;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  margin: 0 4px; /* 좌석 마진(4px)에 정확히 대칭 매핑 */
+}
+
+.seat-row-line {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.seat-row-line.justify-start { justify-content: flex-start; }
+.seat-row-line.justify-end { justify-content: flex-end; }
+
+/* 행 알파벳 라벨 (단방향 왼쪽 표기용) */
+.row-alphabet-label {
+  display: inline-block;
+  width: 36px;
+  font-weight: 700;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* 양방향 대열 정중앙 알파벳 인디케이터 라인 */
+.indexer-row-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  margin-bottom: 8px;
+}
+
+.center-alphabet-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+/* --- 성가대 개별 의자 버튼 스타일 (Core UI) --- */
+.custom-seat-btn {
+  display: inline-block;
+  width: 44px;          /* 모바일 터치 최적화 규격 */
+  height: 44px;
+  line-height: 44px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  margin: 0 4px;        /* 오클릭 예방용 좌석 간 이격 공간 */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+/* 기본 빈 의자 스타일 (실버 파스텔) */
+.custom-seat-btn.available {
+  background: #e2e8f0;
+  color: #64748b;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.custom-seat-btn.available:hover {
+  background: #cbd5e1;
+  color: #334155;
+  transform: scale(1.04);
+}
+
+/* 대열의 바깥쪽 모서리를 기하학적으로 깎는 스타일 (심미성) */
+.left-pane .custom-seat-btn {
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 12px;
+}
+.right-pane .custom-seat-btn,
+.single-layout-wrapper .custom-seat-btn {
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 12px;
+}
+
+/* 파트 배정 시 테마 컬러 & 글로우 효과 */
+.custom-seat-btn.sop {
+  background: #f87171;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(248, 113, 113, 0.35);
+}
+.custom-seat-btn.alt {
+  background: #fbbf24;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(251, 191, 36, 0.35);
+}
+.custom-seat-btn.ten {
+  background: #60a5fa;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(96, 165, 250, 0.35);
+}
+.custom-seat-btn.bas {
+  background: #34d399;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(52, 211, 153, 0.35);
+}
+
+/* 의자 인터랙션 피드백 */
+.custom-seat-btn:active {
+  transform: scale(0.92);
+}
+
+/* --- 5. 액션 공유 버튼 --- */
+.action-section {
+  margin-top: 1rem;
+}
+
+.gradient-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gradient-btn .material-icons-outlined {
+  font-size: 1.3rem;
+}
+
+.gradient-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.gradient-btn:active {
+  transform: translateY(0);
+}
+
+/* --- 애니메이션 키프레임 --- */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes beat {
+  from {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}

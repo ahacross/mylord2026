@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@common/api": ["../../packages/api/src/index.ts"],
+      "@common/utils": ["../../packages/utils/src/index.ts"],
+      "@common/dialog": ["../../packages/form/dialog/src/index.ts"],
+      "@common/tank-table": ["../../packages/form/tank-table/src/index.ts"],
+      "@common/date-picker": ["../../packages/form/date-picker/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*", "src/**/*.vue", "types/**/*.d.ts"]
+}

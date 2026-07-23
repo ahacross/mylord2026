@@ -1,0 +1,23 @@
+{
+  "name": "@common/form",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./dialog": "./src/dialog/index.ts",
+    "./date-picker": "./src/date-picker/index.ts",
+    "./tank-table": "./src/tank-table/index.ts",
+    "./noty": "./src/noty/index.ts"
+  },
+  "dependencies": {
+    "@common/utils": "workspace:*",
+    "@tanstack/vue-table": "^8.21.3",
+    "@tanstack/vue-virtual": "^3.13.33",
+    "@vuepic/vue-datepicker": "^14.0.0",
+    "vue-final-modal": "^4.5.5"
+  },
+  "peerDependencies": {
+    "pinia": "^3.0.0",
+    "vue": "^3.0.0"
+  }
+}

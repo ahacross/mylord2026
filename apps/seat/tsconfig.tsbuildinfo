@@ -1,0 +1,1 @@
+{"root":["./src/app.vue","./src/env.d.ts","./src/main.ts","./src/utils/capture.ts","./src/utils/kakaoshare.ts","./src/views/index.vue","./types/auto-imports.d.ts","./types/typed-router.d.ts"],"version":"6.0.3"}

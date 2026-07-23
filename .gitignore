@@ -1,0 +1,22 @@
+node_modules
+dist
+.idea
+.vscode
+*.log
+
+# 프로젝트 제외 경로
+/packages/api/src/composables/useQuery.js
+/packages/api/src/composables/useQuery.js.map
+/packages/utils/src/index.js
+/packages/utils/src/index.js.map
+/packages/utils/src/useDate.js
+/packages/utils/src/useDate.js.map
+/packages/utils/src/useExcel.js
+/packages/utils/src/useExcel.js.map
+/packages/utils/src/useUtil.js
+/packages/utils/src/useUtil.js.map
+# 프로젝트 제외 경로
+/packages/form/src/date-picker/index.js
+/packages/form/src/date-picker/index.js.map
+/packages/form/src/tank-table/index.js
+/packages/form/src/tank-table/index.js.map

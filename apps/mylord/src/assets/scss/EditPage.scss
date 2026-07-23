@@ -1,0 +1,200 @@
+.edit-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.edit-card {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* 카드 헤더 영역 */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1px solid #a7f3d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .avatar-icon {
+    font-size: 1.6rem;
+  }
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.page-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.card-divider {
+  height: 1px;
+  background-color: #f1f5f9;
+  width: 100%;
+}
+
+/* 폼 영역 */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.label-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #10b981;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  .input-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 1.1rem;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .custom-input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0f172a;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+
+    &:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3.5px rgba(16, 185, 129, 0.15);
+    }
+
+    &::placeholder {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+  }
+
+  .custom-datepicker {
+    width: 100%;
+
+    :deep(.dp__input) {
+      height: 44px !important;
+      border-radius: 12px !important;
+      border-color: #cbd5e1 !important;
+      font-size: 0.95rem !important;
+      font-weight: 600 !important;
+      color: #0f172a !important;
+
+      &:focus {
+        border-color: #10b981 !important;
+        box-shadow: 0 0 0 3.5px rgba(16, 185, 129, 0.15) !important;
+      }
+    }
+  }
+}
+
+/* 하단 버튼 영역 */
+.card-actions {
+  margin-top: 0.5rem;
+}
+
+.btn-save {
+  width: 100%;
+  height: 46px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  user-select: none;
+
+  .btn-icon {
+    font-size: 1.1rem;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    transform: translateY(-1.5px) !important;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45) !important;
+  }
+
+  &:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+  }
+}

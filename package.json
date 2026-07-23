@@ -1,0 +1,44 @@
+{
+  "name": "mylord-root",
+  "version": "0.0.42",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:practiceLink": "pnpm --filter practiceLink dev",
+    "prebuild:practiceLink": "pnpm --filter practiceLink exec vue-tsc --noEmit && node scripts/bump-version.js",
+    "build:practiceLink": "pnpm --filter practiceLink build",
+    "dev:seat": "pnpm --filter seat dev",
+    "prebuild:seat": "pnpm --filter seat exec vue-tsc --noEmit && node scripts/bump-version.js",
+    "build:seat": "pnpm --filter seat build",
+    "dev:mylord": "pnpm --filter mylord dev",
+    "prebuild:mylord": "pnpm --filter mylord exec vue-tsc --noEmit && node scripts/bump-version.js",
+    "build:mylord": "pnpm --filter mylord build",
+    "lint": "oxlint . --fix",
+    "format": "oxfmt ."
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.3.0",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "vue": "^3.5.40",
+    "vue-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "oxfmt": "^0.60.0",
+    "oxlint": "^1.75.0",
+    "rollup-plugin-visualizer": "^7.0.1",
+    "sass-embedded": "^1.100.0",
+    "typescript": "^6.0.3",
+    "unplugin-auto-import": "^21.0.0",
+    "vite": "^8.1.5",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-vue-devtools": "^8.1.5",
+    "vue-tsc": "^3.3.7"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "packageManager": "pnpm@11.13.0"
+}
