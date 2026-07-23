@@ -47,3 +47,7 @@ minimumReleaseAgeExclude:
   - '@vitejs/plugin-vue@6.0.8'
   - oxfmt@0.59.0 || 0.60.0
   - oxlint@1.74.0 || 1.75.0
+  - '@vue/language-core@3.3.8'
+  - vue-tsc@3.3.8
+  - '@tanstack/virtual-core@3.17.6'
+  - '@tanstack/vue-virtual@3.13.34'

@@ -1,1 +1,1 @@
-export { default as DatePicker } from './components/Form/DatePicker.vue'
+export { default as DatePicker } from './DatePicker.vue'

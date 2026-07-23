@@ -21,6 +21,7 @@ const Dialog =
           title: options.title || '',
           confirmTxt: options.confirmTxt || '확인',
           cancelTxt: options.cancelTxt || (type === 'alert' ? '확인' : '취소'),
+          useHistory: true,
           ...modalProps,
           onConfirm() {
             resolve(true)

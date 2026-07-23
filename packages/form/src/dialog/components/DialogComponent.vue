@@ -32,8 +32,16 @@
 import { ref, computed, useSlots, watch, onMounted } from 'vue'
 import ImgClose from '../assets/close.svg'
 import { VueFinalModal, useVfm } from 'vue-final-modal'
-import { useDialogStore } from '../stores/dialog'
 import { useEventListener } from '@vueuse/core'
+import { useDialogHistory } from '../composables/useDialogHistory'
+
+interface Props {
+  useHistory?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  useHistory: true,
+})
 
 const emit = defineEmits(['closed'])
 const modelValue = defineModel<boolean>()
@@ -46,33 +54,36 @@ const closeDialog = () => {
 
 const isTitle = computed(() => !!useSlots().title)
 
-const storeDialog = useDialogStore()
+const { pushHistory, popHistory } = useDialogHistory()
+let isPushed = false
+
+const handlePush = () => {
+  if (!props.useHistory || isPushed) return
+  isPushed = true
+  pushHistory(modalId.value)
+}
+
+const handlePop = () => {
+  if (props.useHistory && isPushed) {
+    popHistory(modalId.value)
+    isPushed = false
+  }
+  emit('closed')
+}
 
 watch(modelValue, (val) => {
   if (val) {
-    const currentState = typeof window !== 'undefined' ? window.history.state : {}
-    const nextPosition = typeof currentState?.position === 'number' ? currentState.position + 1 : undefined
-    history.pushState(
-      {
-        ...currentState,
-        ...(nextPosition !== undefined ? { position: nextPosition } : {}),
-        modalId: modalId.value,
-      },
-      '',
-      window.location.href,
-    )
-    storeDialog.addModalId(modalId.value)
+    handlePush()
   } else {
-    if (typeof window !== 'undefined' && window.history.state?.modalId === modalId.value) {
-      history.back()
-    }
-
-    storeDialog.removeModalId(modalId.value)
-    emit('closed')
+    handlePop()
   }
 })
 
 onMounted(() => {
+  if (modelValue.value === undefined || modelValue.value === true) {
+    handlePush()
+  }
+
   useEventListener(window, 'popstate', () => {
     try {
       const vfm = useVfm()

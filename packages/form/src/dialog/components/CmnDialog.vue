@@ -1,5 +1,5 @@
 <template>
-  <DialogComponent :close="() => emit('cancel')">
+  <DialogComponent v-bind="$attrs" :close="() => emit('cancel')">
     <template #title>
       {{ title }}
     </template>
@@ -25,6 +25,7 @@ interface Props {
   title: string
   confirmTxt: string
   cancelTxt: string
+  useHistory: boolean
 }
 
 withDefaults(defineProps<Props>(), {

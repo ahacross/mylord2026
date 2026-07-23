@@ -12,7 +12,7 @@
   "dependencies": {
     "@common/utils": "workspace:*",
     "@tanstack/vue-table": "^8.21.3",
-    "@tanstack/vue-virtual": "^3.13.33",
+    "@tanstack/vue-virtual": "^3.13.34",
     "@vuepic/vue-datepicker": "^14.0.0",
     "vue-final-modal": "^4.5.5"
   },

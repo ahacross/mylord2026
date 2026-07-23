@@ -36,7 +36,7 @@
 
     <!-- 뷰포트 본문 영역 -->
     <main class="custom-page-container">
-      <router-view />
+      <router-view :key="rerenderCnt" />
     </main>
 
     <!-- 로그인 팝업 모달 -->
@@ -87,7 +87,8 @@ const closeDrawer = () => storeCommon.setDrawerOpen(false)
 const onClickLogout = async () => {
   if (confirm('로그아웃 하시겠습니까?')) {
     localStorage.removeItem('mylordId')
-    storeUser.setInfo({})
+    storeUser.setInfo(undefined)
+    storeUser.setAuth(undefined)
     location.reload()
   }
 }
@@ -112,6 +113,7 @@ watch(info, async () => {
   }
 })
 
+const rerenderCnt = ref(0)
 watch(prompt, async () => {
   if (!prompt.value) {
     if (phone.value.length < 10) return
@@ -120,6 +122,7 @@ watch(prompt, async () => {
     })
     storeUser.setInfo(res)
     localStorage.setItem('mylordId', res.member_id)
+    rerenderCnt.value++
   }
 })
 

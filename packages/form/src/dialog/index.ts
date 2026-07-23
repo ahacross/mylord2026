@@ -6,6 +6,7 @@ export const createVfm = (): any => createVfmOriginal()
 
 export { default as DialogComponent } from './components/DialogComponent.vue'
 export { default as CmnDialog } from './components/CmnDialog.vue'
+export * from './composables/useDialogHistory'
 export * from './composables/useDialog'
 export { ModalsContainer, useModal, useModalSlot, useVfm } from 'vue-final-modal'
 export { useDialogStore } from './stores/dialog'

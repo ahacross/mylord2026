@@ -3,8 +3,8 @@ import { useStoreUser } from '@/stores/user'
 
 export function setupRouterGuard(router: Router) {
   router.beforeEach((to) => {
-    // meta.requiresAuth === false 인 경우 (history 페이지 등) 권한 체크 없이 자유 진입
-    if (to.meta?.requiresAuth === false) {
+    // 이미 '/' 페이지이거나 meta.requiresAuth === false 인 경우 권한 체크 없이 자유 진입
+    if (to.path === '/' || to.meta?.requiresAuth === false) {
       return true
     }
 

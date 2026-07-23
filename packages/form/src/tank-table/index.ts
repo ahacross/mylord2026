@@ -1,3 +1,3 @@
-export { default as TankTable } from './components/Table/TankTable.vue'
-export { default as InputRenderer } from './components/Table/form/InputRenderer.vue'
+export { default as TankTable } from './TankTable.vue'
+export { default as InputRenderer } from './form/InputRenderer.vue'
 export * from './types/table'
