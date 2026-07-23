@@ -12,6 +12,18 @@
       <div class="grid-action-area">
         <div v-if="props.isSearch" class="search-input-wrapper">
           <input v-model="searchInputValue" placeholder="전체 검색..." />
+          <button
+            v-if="searchInputValue"
+            type="button"
+            class="search-clear-btn"
+            @click="searchInputValue = ''"
+            aria-label="검색어 지우기"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
         <div class="action-buttons-wrapper">
           <slot name="btn-before" />
@@ -649,8 +661,13 @@ defineExpose({
   gap: 12px;
   margin-left: auto;
 }
+.search-input-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
 .search-input-wrapper input {
-  padding: 7px 14px;
+  padding: 7px 30px 7px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   outline: none;
@@ -658,11 +675,37 @@ defineExpose({
   width: 210px;
   background-color: #f8fafc;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 .search-input-wrapper input:focus {
   border-color: #059669;
   background-color: #ffffff;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+.search-clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: #94a3b8;
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.search-clear-btn:hover {
+  background: #64748b;
+}
+.search-clear-btn svg {
+  width: 11px;
+  height: 11px;
 }
 .action-buttons-wrapper {
   display: flex;

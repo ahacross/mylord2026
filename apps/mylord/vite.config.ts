@@ -5,7 +5,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import viteCompression from 'vite-plugin-compression'
 import VueRouter from 'vue-router/vite'
-import type { RouteRecordRaw } from 'vue-router'
 import { VueRouterAutoImports } from 'vue-router/unplugin'
 
 export default defineConfig({
@@ -81,10 +80,7 @@ export default defineConfig({
             if (id.includes('xlsx')) {
               return 'vendor-xlsx'
             }
-            if (id.includes('tui-grid')) {
-              return 'vendor-tuigrid'
-            }
-            if (id.includes('billboard.js') || id.includes('d3')) {
+            if (id.includes('d3')) {
               return 'vendor-charts'
             }
             if (id.includes('vue-final-modal')) {

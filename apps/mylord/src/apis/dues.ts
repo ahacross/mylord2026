@@ -1,6 +1,6 @@
 import { api } from '@common/api'
 
-api.setBaseURL('/apis')
+
 
 // 개인 회비 내역 조회
 export const apiGetDues = async (params?: Record<string, any>) => await api.get('/mylord/dues', params)

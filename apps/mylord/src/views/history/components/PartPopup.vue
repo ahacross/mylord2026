@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { DialogComponent } from '@common/form/dialog'
-import { parts } from '@/constants/constants'
+import { parts } from '@/constants'
 
 const modelValue = defineModel<boolean>()
 

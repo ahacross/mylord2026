@@ -55,7 +55,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePage({
   name: 'stat',
   meta: {
@@ -129,4 +129,4 @@ const { refetch } = useQuery({
 watch(statYear, refetch, { immediate: true })
 </script>
 
-<style scoped lang="scss" src="assets/scss/AdminStatPage.scss"></style>
+<style scoped lang="scss" src="@/assets/scss/AdminStatPage.scss"></style>

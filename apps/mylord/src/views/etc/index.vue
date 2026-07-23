@@ -71,4 +71,4 @@ definePage({
 })
 </script>
 
-<style scoped lang="scss" src="assets/scss/EtcPage.scss"></style>
+<style scoped lang="scss" src="@/assets/scss/EtcPage.scss"></style>

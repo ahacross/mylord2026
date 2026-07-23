@@ -1,6 +1,6 @@
 import { api } from '@common/api'
 
-api.setBaseURL('/apis')
+
 
 export const apiAttendanceList = async (attendance_date: string, part?: string) => await api.get('/mylord/attendance', { attendance_date, part })
 

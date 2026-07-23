@@ -1,6 +1,6 @@
 import { api } from '@common/api'
 
-api.setBaseURL('/apis')
+
 
 export const apiGetMembers = async (params?: Record<string, any>) => await api.get('/mylord/member/list', params)
 export const apiGetUserInfo = async (params?: Record<string, any>) => await api.get('/mylord/member', params)

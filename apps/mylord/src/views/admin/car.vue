@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePage({
   name: 'car',
   meta: {
@@ -41,7 +41,7 @@ const columns = [
 ]
 
 const { data } = useQuery({ queryFn: apiCar, immediate: true })
-const filteredData = computed(() => data.value?.filter((i) => i.car) || [])
+const filteredData = computed(() => data.value?.filter((i: any) => i.car) || [])
 </script>
 
-<style scoped lang="scss" src="assets/scss/AdminCarPage.scss"></style>
+<style scoped lang="scss" src="@/assets/scss/AdminCarPage.scss"></style>

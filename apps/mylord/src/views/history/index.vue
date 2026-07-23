@@ -92,4 +92,4 @@ const tableData = computed(() => {
 })
 </script>
 
-<style scoped lang="scss" src="assets/scss/HistoryPage.scss"></style>
+<style scoped lang="scss" src="@/assets/scss/HistoryPage.scss"></style>

@@ -1,7 +1,7 @@
 import { api } from '@common/api'
 import { useStoreUser } from '@/stores/user'
 
-api.setBaseURL('/apis')
+
 
 export const apiCheckOfficer = async () => {
   const storeUser = useStoreUser()

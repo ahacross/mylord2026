@@ -1,6 +1,6 @@
 import { api } from '@common/api'
 
-api.setBaseURL('/apis')
+
 
 export const apiStatTot = async (params?: Record<string, any>) => await api.get('/mylord/stat/tot', params)
 

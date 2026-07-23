@@ -40,13 +40,13 @@
 
       <!-- 테이블 영역 (TankTable 적용) -->
       <div class="table-container">
-        <TankTable :data="data" :columns="columns" :is-search="true" :is-excel="true" name="회비 납부 목록" />
+        <TankTable :data :columns :is-search="false" name="회비 납부 목록" />
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePage({
   name: 'dues',
   meta: {
@@ -57,13 +57,13 @@ definePage({
 import { DatePicker } from '@common/form/date-picker'
 import { TankTable } from '@common/form/tank-table'
 import { useQuery } from '@common/api'
-import { partsShort } from '@/constants/constants'
+import { partsShort } from '@/constants'
 
 const selectedYear = ref(String(new Date().getFullYear()))
 const tab = ref('s')
-const data = ref([])
+const data = ref<any[]>([])
 
-const changeDues = async (row, delta) => {
+const changeDues = async (row: Record<string, any>, delta: number) => {
   const currentCnt = Number(row.dues_cnt2 ?? row.dues_cnt ?? 0)
   const nextCnt = Math.max(0, Math.min(12, currentCnt + delta))
   if (nextCnt === currentCnt) return
@@ -83,7 +83,7 @@ const columns = [
     id: 'dues_cnt2',
     align: 'center',
     width: 160,
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const cnt = Number(row.original.dues_cnt2 ?? row.original.dues_cnt ?? 0)
       const isCompleted = cnt >= 12
       return h('span', { class: ['dues-progress-badge', isCompleted ? 'is-completed' : ''] }, isCompleted ? '✓ 12개월 (완납)' : `${cnt} / 12 개월`)
@@ -93,7 +93,7 @@ const columns = [
     header: '납부 개월 수정',
     id: 'dues_control',
     align: 'center',
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const cnt = Number(row.original.dues_cnt2 ?? row.original.dues_cnt ?? 0)
       return h('div', { class: 'dues-stepper' }, [
         h(
@@ -102,7 +102,7 @@ const columns = [
             type: 'button',
             class: 'stepper-btn',
             disabled: cnt <= 0,
-            onClick: (e) => {
+            onClick: (e: Event) => {
               e.stopPropagation()
               changeDues(row.original, -1)
             },
@@ -116,7 +116,7 @@ const columns = [
             type: 'button',
             class: 'stepper-btn',
             disabled: cnt >= 12,
-            onClick: (e) => {
+            onClick: (e: Event) => {
               e.stopPropagation()
               changeDues(row.original, 1)
             },
@@ -139,4 +139,4 @@ const { refetch } = useQuery({
 watch([selectedYear, tab], refetch, { immediate: true })
 </script>
 
-<style lang="scss" src="assets/scss/AdminDuesPage.scss"></style>
+<style lang="scss" src="@/assets/scss/AdminDuesPage.scss"></style>

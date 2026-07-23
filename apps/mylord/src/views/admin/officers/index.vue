@@ -49,7 +49,7 @@ definePage({
 import { TankTable } from '@common/form/tank-table'
 import { DatePicker } from '@common/form/date-picker'
 import { useQuery } from '@common/api'
-import { apiOfficerList } from 'apis/officer'
+import { apiOfficerList } from '@/apis/officer'
 import OfficerPopup from '@/views/admin/officers/components/OfficerPopup.vue'
 
 const yearRange = [2000, new Date().getFullYear()] as [number, number]
@@ -115,4 +115,4 @@ const { refetch, data } = useQuery({
 watch(searchYear, refetch, { immediate: true })
 </script>
 
-<style lang="scss" src="assets/scss/AdminOfficerPage.scss"></style>
+<style lang="scss" src="@/assets/scss/AdminOfficerPage.scss"></style>

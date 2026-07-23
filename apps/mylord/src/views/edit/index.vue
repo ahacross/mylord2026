@@ -107,4 +107,4 @@ useQuery({
 })
 </script>
 
-<style scoped lang="scss" src="assets/scss/EditPage.scss"></style>
+<style scoped lang="scss" src="@/assets/scss/EditPage.scss"></style>

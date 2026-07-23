@@ -67,7 +67,7 @@
 import { DialogComponent } from '@common/form/dialog'
 import { DatePicker } from '@common/form/date-picker'
 import { useDate } from '@common/utils'
-import { memberStatus } from '@/constants/constants'
+import { memberStatus } from '@/constants'
 
 interface Props {
   data?: Record<string, any> | null
@@ -172,4 +172,4 @@ const onSave = async (close: () => void) => {
 // watch(modelValue, initForm)
 </script>
 
-<style lang="scss" src="assets/scss/MemberPopup.scss"></style>
+<style lang="scss" src="@/assets/scss/MemberPopup.scss"></style>

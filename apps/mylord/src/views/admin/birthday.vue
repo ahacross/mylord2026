@@ -32,7 +32,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePage({
   name: 'birthday',
   meta: {
@@ -46,7 +46,7 @@ import { useQuery } from '@common/api'
 
 const currentMonth = String(new Date().getMonth() + 1).padStart(2, '0')
 const selectedMonth = ref(currentMonth)
-const data = ref([])
+const data = ref<any[]>([])
 
 const columns = [
   { header: '이름', id: 'name', align: 'center', width: 140 },
@@ -54,7 +54,7 @@ const columns = [
     header: '생일',
     id: 'birthday',
     align: 'center',
-    formatter: ({ value }) => {
+    formatter: ({ value }: any) => {
       if (!value) return ''
       const str = String(value)
       if (str.length === 8) {
@@ -77,4 +77,4 @@ const { refetch } = useQuery({
 watch(selectedMonth, refetch, { immediate: true })
 </script>
 
-<style scoped lang="scss" src="assets/scss/AdminBirthdayPage.scss"></style>
+<style scoped lang="scss" src="@/assets/scss/AdminBirthdayPage.scss"></style>

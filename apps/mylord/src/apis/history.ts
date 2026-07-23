@@ -1,6 +1,6 @@
 import { api } from '@common/api'
 
-api.setBaseURL('/apis')
+
 
 // 부른 곡들 목록
 export const apiGetHistory = async () => await api.get('/mylord/praised')

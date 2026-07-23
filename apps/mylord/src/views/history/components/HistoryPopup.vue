@@ -86,7 +86,7 @@ import { DialogComponent } from '@common/form/dialog'
 import { DatePicker } from '@common/form/date-picker'
 
 import { useDate } from '@common/utils'
-import { parts } from '@/constants/constants'
+import { parts } from '@/constants'
 
 const modelValue = defineModel<boolean>()
 const emit = defineEmits(['close'])

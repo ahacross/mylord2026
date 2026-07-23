@@ -64,7 +64,7 @@ definePage({
 
 import { useQuery } from '@common/api'
 import { TankTable } from '@common/form/tank-table'
-import { memberStatus, memberStatusMap, partsShort } from '@/constants/constants'
+import { memberStatus, memberStatusMap, partsShort } from '@/constants'
 import { useDate } from '@common/utils'
 import MemberPopup from '@/views/admin/members/components/MemberPopup.vue'
 
@@ -143,4 +143,4 @@ const onClickCell = async ({ columnName, row }) => {
 watch(tab, refetch, { immediate: true })
 </script>
 
-<style lang="scss" src="assets/scss/MemberManager.scss"></style>
+<style lang="scss" src="@/assets/scss/MemberManager.scss"></style>

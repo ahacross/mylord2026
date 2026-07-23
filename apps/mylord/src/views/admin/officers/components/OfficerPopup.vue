@@ -90,8 +90,8 @@ const initForm = async () => {
     form.member_id = member_id || ''
     form.etc = etc || ''
     await nextTick()
-    terms.value.from = s_date ? useDate.format(s_date, 'yyyy-MM-dd') : ''
-    terms.value.to = e_date ? useDate.format(e_date, 'yyyy-MM-dd') : ''
+    terms.value.from = s_date ? useDate.format(s_date, 'yyyyMMdd') : ''
+    terms.value.to = e_date ? useDate.format(e_date, 'yyyyMMdd') : ''
   } else {
     tempName.value = ''
     terms.value = { from: '', to: '' }
@@ -177,4 +177,4 @@ const onRemove = async (close: () => void) => {
 watch(modelValue, initForm)
 </script>
 
-<style lang="scss" src="assets/scss/MemberPopup.scss"></style>
+<style lang="scss" src="@/assets/scss/MemberPopup.scss"></style>

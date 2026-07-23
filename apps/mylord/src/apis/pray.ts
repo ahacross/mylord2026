@@ -1,6 +1,6 @@
 import { api } from '@common/api'
 
-api.setBaseURL('/apis')
+
 
 export const apiMakeList = async () => await api.get('/mylord/pray/makeList')
 

@@ -76,7 +76,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePage({
   name: 'attendance',
   meta: {
@@ -87,14 +87,14 @@ definePage({
 import { DatePicker } from '@common/form/date-picker'
 import { TankTable } from '@common/form/tank-table'
 import { useQuery } from '@common/api'
-import { partsShort } from '@/constants/constants'
+import { partsShort } from '@/constants'
 
 const attendanceDate = ref(useDate.format(new Date(), 'yyyyMMdd'))
 const enrollBefore = ref(0)
 const enrollAfter = ref(0)
 const tab = ref('s')
 
-const toggleAttendance = async (row, column, checked) => {
+const toggleAttendance = async (row: Record<string, any>, column: string, checked: boolean) => {
   row[column] = checked ? 'Y' : 'N'
   const { member_id, before_check, after_check, part, name } = row
   await apiAttendanceInsert({
@@ -114,13 +114,13 @@ const columns = [
     header: '예배 전 출석',
     id: 'before_check',
     align: 'center',
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const isChecked = row.original.before_check === 'Y'
-      return h('label', { class: 'att-checkbox-wrapper', onClick: (e) => e.stopPropagation() }, [
+      return h('label', { class: 'att-checkbox-wrapper', onClick: (e: Event) => e.stopPropagation() }, [
         h('input', {
           type: 'checkbox',
           checked: isChecked,
-          onChange: (e) => toggleAttendance(row.original, 'before_check', e.target.checked),
+          onChange: (e: Event) => toggleAttendance(row.original, 'before_check', (e.target as HTMLInputElement).checked),
         }),
         h('span', { class: 'custom-check-box' }),
       ])
@@ -130,13 +130,13 @@ const columns = [
     header: '예배 후 출석',
     id: 'after_check',
     align: 'center',
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const isChecked = row.original.after_check === 'Y'
-      return h('label', { class: 'att-checkbox-wrapper', onClick: (e) => e.stopPropagation() }, [
+      return h('label', { class: 'att-checkbox-wrapper', onClick: (e: Event) => e.stopPropagation() }, [
         h('input', {
           type: 'checkbox',
           checked: isChecked,
-          onChange: (e) => toggleAttendance(row.original, 'after_check', e.target.checked),
+          onChange: (e: Event) => toggleAttendance(row.original, 'after_check', (e.target as HTMLInputElement).checked),
         }),
         h('span', { class: 'custom-check-box' }),
       ])
@@ -186,8 +186,8 @@ watch(
   { immediate: true },
 )
 
-const beforeCount = computed(() => (data.value || []).filter((item) => item?.before_check === 'Y').length)
-const afterCount = computed(() => (data.value || []).filter((item) => item?.after_check === 'Y').length)
+const beforeCount = computed(() => (data.value || []).filter((item: any) => item?.before_check === 'Y').length)
+const afterCount = computed(() => (data.value || []).filter((item: any) => item?.after_check === 'Y').length)
 </script>
 
-<style lang="scss" src="assets/scss/AttendanceManager.scss"></style>
+<style lang="scss" src="@/assets/scss/AttendanceManager.scss"></style>
