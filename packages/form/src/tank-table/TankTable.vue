@@ -67,12 +67,12 @@
                 :key="header.id"
                 class="v-th"
                 :data-column-id="header.column.id"
-                :style="getColumnStyle(header.column)"
+                :style="getColumnStyle(header.column, true)"
               >
-                <div class="header-content" :class="{ 'is-sortable': header.column.getCanSort() }" @click="header.column.getToggleSortingHandler()?.($event)">
+                <div class="header-content" :class="{ 'is-sortable': props.isSort && header.column.getCanSort() }" @click="props.isSort && header.column.getToggleSortingHandler()?.($event)">
                   <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext()" />
 
-                  <span v-if="header.column.getCanSort()" class="sort-icon-wrapper">
+                  <span v-if="props.isSort && header.column.getCanSort()" class="sort-icon-wrapper">
                     <svg
                       v-if="table.getState().sorting[0]?.id === header.column.id && table.getState().sorting[0]?.desc === false"
                       class="sort-icon active"
@@ -100,7 +100,7 @@
                 </div>
 
                 <div
-                  v-if="header.column.getCanResize()"
+                  v-if="props.isResize && header.column.getCanResize()"
                   class="resizer"
                   :class="{ 'is-resizing': header.column.getIsResizing() }"
                   @mousedown.stop.prevent="syncCurrentWidth(header, $event)"
@@ -116,7 +116,7 @@
         <div
           v-if="table.getRowModel().rows.length > 0"
           class="v-tbody-virtual-canvas"
-          :style="{ width: tableStyle.width, height: `${rowVirtualizer.getTotalSize()}px` }"
+          :style="{ width: tableStyle.width, minWidth: tableStyle.minWidth, height: `${rowVirtualizer.getTotalSize()}px` }"
         >
           <div
             v-for="virtualRow in rowVirtualizer.getVirtualItems()"
@@ -166,7 +166,7 @@
           </div>
         </div>
 
-        <div v-else class="v-tbody-empty" :style="{ width: tableStyle.width }">
+        <div v-else class="v-tbody-empty" :style="{ width: tableStyle.width, minWidth: tableStyle.minWidth }">
           <slot name="empty">
             <slot name="no-data">
               <div class="empty-message-container">
@@ -240,6 +240,8 @@ const props = withDefaults(
     isSelection?: boolean | ((row: TData) => boolean)
     isExcel?: boolean
     isSearch?: boolean
+    isResize?: boolean
+    isSort?: boolean
     hideName?: boolean
     name?: string
     emptyText?: string
@@ -250,6 +252,8 @@ const props = withDefaults(
     isSelection: false,
     isExcel: false,
     isSearch: true,
+    isResize: false,
+    isSort: false,
     hideName: false,
     name: 'grid_data',
     emptyText: '데이터가 없습니다.',
@@ -282,11 +286,13 @@ const headerWrapperRef = useTemplateRef<HTMLDivElement>('headerWrapperRef')
 const parentRef = useTemplateRef<HTMLDivElement>('parentRef')
 
 const scrollbarWidth = ref(0)
+const containerWidth = ref(0)
 
 const updateScrollbarWidth = () => {
   if (parentRef.value) {
     const sbw = parentRef.value.offsetWidth - parentRef.value.clientWidth
     scrollbarWidth.value = Math.max(0, sbw)
+    containerWidth.value = parentRef.value.clientWidth
   }
 }
 
@@ -374,27 +380,44 @@ const syncCurrentWidth = (header: any, event: any) => {
 
 const totalHeadersLength = computed(() => table.getFlatHeaders().length)
 
-const isPixelMode = computed(() => {
-  const isResizing = table.getState().columnSizingInfo.isResizingColumn
-  const sizingKeysLength = Object.keys(table.getState().columnSizing).length
-  return isResizing || sizingKeysLength > 0 || totalHeadersLength.value > 10
-})
-
-const tableStyle = computed(() => ({
-  width: isPixelMode.value ? `${table.getTotalSize()}px` : '100%',
-}))
-
-const getColumnStyle = (column: any) => {
-  const align = column.columnDef.align
-  const justifyContent = align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start'
-  const size = column.columnDef.size || column.getSize()
-  const hasCustomWidth = Boolean(column.columnDef.width || (column.columnDef.size && column.columnDef.size !== 150))
+const tableStyle = computed(() => {
+  const isResizing = Boolean(table.getState().columnSizingInfo.isResizingColumn)
+  if (isResizing) {
+    return {
+      width: `${table.getTotalSize()}px`,
+      minWidth: '100%',
+    }
+  }
 
   return {
-    width: hasCustomWidth ? `${size}px` : isPixelMode.value ? `${size}px` : 'auto',
-    flex: hasCustomWidth ? `0 0 ${size}px` : isPixelMode.value ? `0 0 ${size}px` : '1 1 0%',
+    width: '100%',
+    minWidth: `${table.getTotalSize()}px`,
+  }
+})
+
+const getColumnStyle = (column: any, isHeader = false) => {
+  const align = isHeader ? (column.columnDef.headerAlign || 'center') : (column.columnDef.align || 'left')
+  const justifyContent = align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start'
+  const size = column.columnDef.size || column.getSize()
+
+  const isResizing = Boolean(table.getState().columnSizingInfo.isResizingColumn)
+  const isColumnSized = Boolean(table.getState().columnSizing[column.id])
+
+  if (isResizing || isColumnSized) {
+    return {
+      width: `${size}px`,
+      flex: `0 0 ${size}px`,
+      justifyContent,
+      textAlign: align,
+    }
+  }
+
+  return {
+    width: 'auto',
+    flex: `1 0 ${size}px`,
+    minWidth: `${size}px`,
     justifyContent,
-    textAlign: align || 'left',
+    textAlign: align,
   }
 }
 
@@ -409,6 +432,8 @@ const resolvedColumns = computed<ColumnDef<TData>[]>(() => {
       size: col.width || 150,
       width: col.width,
       align: col.align || 'left',
+      headerAlign: col.headerAlign || 'center',
+      enableSorting: props.isSort && col.enableSorting !== false,
       editComponent: col.editComponent,
       cell: (cellProps: any) => {
         if (col.cell) {
@@ -463,6 +488,8 @@ const table = useVueTable<TData>({
     },
   },
   columnResizeMode: 'onChange',
+  enableColumnResizing: props.isResize,
+  enableSorting: props.isSort,
   enableRowSelection: (row) => (typeof props.isSelection === 'function' ? props.isSelection(row.original) : props.isSelection),
   enableMultiRowSelection: true,
   onRowSelectionChange: (updater) => {
@@ -644,16 +671,20 @@ defineExpose({
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
+  gap: 8px;
 }
 .grid-title-area {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 .grid-title {
   font-size: 17px;
   font-weight: 800;
   color: #1e293b;
   letter-spacing: -0.3px;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 .grid-action-area {
   display: flex;
@@ -711,6 +742,7 @@ defineExpose({
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 .btn-action {
   padding: 7px 18px;
@@ -719,12 +751,43 @@ defineExpose({
   font-weight: 700;
   cursor: pointer;
   border: 1px solid transparent;
-  white-space: nowrap;
+  white-space: nowrap !important;
+  word-break: keep-all;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+.btn-action span {
+  white-space: nowrap !important;
+}
+
+@media (max-width: 640px) {
+  .grid-container {
+    padding: 8px 10px;
+  }
+  .grid-title {
+    font-size: 15px;
+  }
+  .grid-action-area {
+    gap: 6px;
+    flex: 1;
+  }
+  .search-input-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+  .search-input-wrapper input {
+    width: 100%;
+    font-size: 12px;
+    padding: 6px 26px 6px 10px;
+  }
+  .btn-action {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
 }
 .btn-secondary {
   background-color: #fff;

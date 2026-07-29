@@ -9,7 +9,7 @@ api.setBaseURL('/apis')
 
 const app = createApp(App)
 
-app.use(router)
 app.use(pinia)
+app.use(router)
 app.use(createVfm())
 app.mount('#app')

@@ -25,7 +25,7 @@ interface Props {
   title: string
   confirmTxt: string
   cancelTxt: string
-  useHistory: boolean
+  useHistory?: boolean
 }
 
 withDefaults(defineProps<Props>(), {

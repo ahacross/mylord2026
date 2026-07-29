@@ -108,12 +108,36 @@ const toggleAttendance = async (row: Record<string, any>, column: string, checke
   noty.success(`${name} 님의 ${label} 출석이 ${checked ? '출석' : '결석'}으로 변경되었습니다.`)
 }
 
-const columns = [
-  { header: '이름', accessorKey: 'name', id: 'name', align: 'center', width: 140 },
+const isMobile = ref(false)
+
+const updateIsMobile = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth <= 640
+  }
+}
+
+onMounted(() => {
+  updateIsMobile()
+  window.addEventListener('resize', updateIsMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile)
+})
+
+const columns = computed(() => [
   {
-    header: '예배 전 출석',
+    header: '이름',
+    accessorKey: 'name',
+    id: 'name',
+    align: 'center',
+    width: isMobile.value ? 75 : 140,
+  },
+  {
+    header: isMobile.value ? '예배 전' : '예배 전 출석',
     id: 'before_check',
     align: 'center',
+    width: isMobile.value ? 105 : 150,
     cell: ({ row }: any) => {
       const isChecked = row.original.before_check === 'Y'
       return h('label', { class: 'att-checkbox-wrapper', onClick: (e: Event) => e.stopPropagation() }, [
@@ -127,9 +151,10 @@ const columns = [
     },
   },
   {
-    header: '예배 후 출석',
+    header: isMobile.value ? '예배 후' : '예배 후 출석',
     id: 'after_check',
     align: 'center',
+    width: isMobile.value ? 105 : 150,
     cell: ({ row }: any) => {
       const isChecked = row.original.after_check === 'Y'
       return h('label', { class: 'att-checkbox-wrapper', onClick: (e: Event) => e.stopPropagation() }, [
@@ -142,7 +167,7 @@ const columns = [
       ])
     },
   },
-]
+])
 
 const getListEnrollment = async () => {
   if (!attendanceDate.value) return

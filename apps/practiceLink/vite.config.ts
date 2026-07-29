@@ -10,15 +10,15 @@ import viteCompression from 'vite-plugin-compression'
 export default defineConfig({
   base: '/practiceLink/',
   resolve: {
+    dedupe: ['vue', 'pinia', 'vue-router'],
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@common/api': path.resolve(__dirname, '../../packages/api/src'),
-      '@common/utils': path.resolve(__dirname, '../../packages/utils/src'),
       '@common/form': path.resolve(__dirname, '../../packages/form/src'),
     },
   },
   optimizeDeps: {
-    exclude: ['@common/utils', '@common/form', '@common/api'],
+    exclude: ['@common/form', '@common/api'],
   },
   server: {
     port: 5173,
@@ -51,7 +51,6 @@ export default defineConfig({
         'vue-router',
         {
           '@common/form/dialog': ['useDialog'],
-          '@common/utils': ['useDate', 'useUtil'],
           '@common/api': ['createApiClient', 'api'],
         },
       ],
@@ -69,24 +68,27 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('xlsx')) {
-              return 'vendor-xlsx'
-            }
-            if (id.includes('vue-final-modal')) {
-              return 'vendor-vfm'
-            }
-            if (id.includes('@tanstack')) {
-              return 'vendor-tanstack'
-            }
-            if (id.includes('@vuepic')) {
-              return 'vendor-datepicker'
-            }
-            if (id.includes('vue') || id.includes('pinia') || id.includes('vue-router')) {
-              return 'vendor-vue-core'
-            }
-            return 'vendor-libs'
-          }
+          const normalizedId = id.replace(/\\/g, '/')
+          if (!normalizedId.includes('/node_modules/')) return
+
+          const rules = [
+            { chunk: 'vendor-xlsx', targets: ['/node_modules/xlsx/'] },
+            { chunk: 'vendor-vfm', targets: ['/node_modules/vue-final-modal/'] },
+            { chunk: 'vendor-tanstack', targets: ['/node_modules/@tanstack/'] },
+            { chunk: 'vendor-datepicker', targets: ['/node_modules/@vuepic/'] },
+            {
+              chunk: 'vendor-vue-core',
+              targets: [
+                '/node_modules/vue/',
+                '/node_modules/@vue/',
+                '/node_modules/pinia/',
+                '/node_modules/vue-router/',
+              ],
+            },
+          ]
+
+          const matched = rules.find((r) => r.targets.some((t) => normalizedId.includes(t)))
+          return matched ? matched.chunk : 'vendor-libs'
         },
       },
     },

@@ -75,24 +75,36 @@ const changeDues = async (row: Record<string, any>, delta: number) => {
   await noty.success(`${row.name} 님의 회비가 ${nextCnt}개월로 수정되었습니다.`)
 }
 
-const columns = [
-  { header: '이름', accessorKey: 'name', id: 'name', align: 'center', width: 140 },
+const isMobile = ref(false)
+
+const updateIsMobile = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth <= 640
+  }
+}
+
+onMounted(() => {
+  updateIsMobile()
+  window.addEventListener('resize', updateIsMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile)
+})
+
+const columns = computed(() => [
   {
-    header: '납부 현황',
-    accessorKey: 'dues_cnt2',
-    id: 'dues_cnt2',
+    header: '이름',
+    accessorKey: 'name',
+    id: 'name',
     align: 'center',
-    width: 160,
-    cell: ({ row }: any) => {
-      const cnt = Number(row.original.dues_cnt2 ?? row.original.dues_cnt ?? 0)
-      const isCompleted = cnt >= 12
-      return h('span', { class: ['dues-progress-badge', isCompleted ? 'is-completed' : ''] }, isCompleted ? '✓ 12개월 (완납)' : `${cnt} / 12 개월`)
-    },
+    width: isMobile.value ? 75 : 140,
   },
   {
-    header: '납부 개월 수정',
+    header: isMobile.value ? '개월 수정' : '납부 개월 수정',
     id: 'dues_control',
     align: 'center',
+    width: isMobile.value ? 120 : 180,
     cell: ({ row }: any) => {
       const cnt = Number(row.original.dues_cnt2 ?? row.original.dues_cnt ?? 0)
       return h('div', { class: 'dues-stepper' }, [
@@ -126,7 +138,19 @@ const columns = [
       ])
     },
   },
-]
+  {
+    header: '납부 현황',
+    accessorKey: 'dues_cnt2',
+    id: 'dues_cnt2',
+    align: 'center',
+    width: isMobile.value ? 125 : 160,
+    cell: ({ row }: any) => {
+      const cnt = Number(row.original.dues_cnt2 ?? row.original.dues_cnt ?? 0)
+      const isCompleted = cnt >= 12
+      return h('span', { class: ['dues-progress-badge', isCompleted ? 'is-completed' : ''] }, isCompleted ? (isMobile.value ? '완납' : '✓ 12개월 (완납)') : `${cnt} / 12 개월`)
+    },
+  },
+])
 
 const { refetch } = useQuery({
   queryFn: async () => {

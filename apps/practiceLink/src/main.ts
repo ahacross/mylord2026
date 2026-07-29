@@ -8,8 +8,8 @@ import './assets/main.scss'
 const app = createApp(App)
 const vfm = createVfm()
 
-app.use(router)
 app.use(store)
+app.use(router)
 app.use(vfm)
 
 app.component('DialogComponent', DialogComponent)

@@ -8,8 +8,9 @@ import VueRouter from 'vue-router/vite'
 import { VueRouterAutoImports } from 'vue-router/unplugin'
 
 export default defineConfig({
-  base: '/mylord2/',
+  base: '/mylord/',
   resolve: {
+    dedupe: ['vue', 'pinia', 'vue-router'],
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@common/api': path.resolve(__dirname, '../../packages/api/src'),
@@ -75,22 +76,28 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            // 대형 타사 라이브러리들 청크 분리
-            if (id.includes('xlsx')) {
-              return 'vendor-xlsx'
-            }
-            if (id.includes('d3')) {
-              return 'vendor-charts'
-            }
-            if (id.includes('vue-final-modal')) {
-              return 'vendor-vfm'
-            }
-            if (id.includes('vue') || id.includes('pinia') || id.includes('vue-router')) {
-              return 'vendor-vue-core'
-            }
-            return 'vendor-libs'
-          }
+          const normalizedId = id.replace(/\\/g, '/')
+          if (!normalizedId.includes('/node_modules/')) return
+
+          const rules = [
+            { chunk: 'vendor-xlsx', targets: ['/node_modules/xlsx/'] },
+            { chunk: 'vendor-charts', targets: ['/node_modules/d3/', '/node_modules/d3-'] },
+            { chunk: 'vendor-vfm', targets: ['/node_modules/vue-final-modal/'] },
+            { chunk: 'vendor-tanstack', targets: ['/node_modules/@tanstack/'] },
+            { chunk: 'vendor-datepicker', targets: ['/node_modules/@vuepic/'] },
+            {
+              chunk: 'vendor-vue-core',
+              targets: [
+                '/node_modules/vue/',
+                '/node_modules/@vue/',
+                '/node_modules/pinia/',
+                '/node_modules/vue-router/',
+              ],
+            },
+          ]
+
+          const matched = rules.find((r) => r.targets.some((t) => normalizedId.includes(t)))
+          return matched ? matched.chunk : 'vendor-libs'
         },
       },
     },

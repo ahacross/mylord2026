@@ -61,7 +61,7 @@ const columns = [
     accessorKey: 'role',
     id: 'role',
     align: 'center',
-    width: 140,
+    width: 120,
     cell: ({ row }: any) => h('span', { class: 'officer-link role-tag', onClick: () => onClickPopup(row.original) }, row.original.role),
   },
   {
@@ -69,7 +69,7 @@ const columns = [
     accessorKey: 'name',
     id: 'name',
     align: 'center',
-    width: 140,
+    width: 120,
     cell: ({ row }: any) => h('span', { class: 'officer-link', onClick: () => onClickPopup(row.original) }, row.original.name),
   },
   {
@@ -77,7 +77,7 @@ const columns = [
     accessorKey: 'year',
     id: 'year',
     align: 'center',
-    width: 120,
+    width: 100,
     formatter: ({ value }: any) => (value ? `${value}년` : ''),
   },
   {
@@ -85,6 +85,7 @@ const columns = [
     accessorKey: 'status',
     id: 'status',
     align: 'center',
+    width: 120,
     cell: ({ row }: any) => {
       const isCurrent = row.original.status === 'Y'
       return h('span', { class: ['status-badge', isCurrent ? 'active' : 'ended'] }, isCurrent ? '✓ 임기 중' : '임기 종료')

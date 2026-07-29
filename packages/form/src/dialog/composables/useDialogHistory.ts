@@ -1,28 +1,31 @@
-import { useDialogStore } from '../stores/dialog'
-
 export function useDialogHistory() {
-  const storeDialog = useDialogStore()
-
   const pushHistory = (modalId: string) => {
-    const currentState = typeof window !== 'undefined' ? window.history.state : {}
+    if (typeof window === 'undefined') return
+    const currentState = window.history.state || {}
     const nextPosition = typeof currentState?.position === 'number' ? currentState.position + 1 : undefined
-    history.pushState(
-      {
-        ...currentState,
-        ...(nextPosition !== undefined ? { position: nextPosition } : {}),
-        modalId,
-      },
-      '',
-      window.location.href,
-    )
-    storeDialog.addModalId(modalId)
+    try {
+      history.pushState(
+        {
+          ...currentState,
+          ...(nextPosition !== undefined ? { position: nextPosition } : {}),
+          modalId,
+        },
+        '',
+        window.location.href,
+      )
+    } catch {
+      // ignore
+    }
   }
 
   const popHistory = (modalId: string) => {
     if (typeof window !== 'undefined' && window.history.state?.modalId === modalId) {
-      history.back()
+      try {
+        history.back()
+      } catch {
+        // ignore
+      }
     }
-    storeDialog.removeModalId(modalId)
   }
 
   return {

@@ -93,13 +93,30 @@ const filterData = computed(() => {
   return list.filter(({ status }) => checkStatus.value.includes(status))
 })
 
-const columns = [
+const isMobile = ref(false)
+
+const updateIsMobile = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth <= 640
+  }
+}
+
+onMounted(() => {
+  updateIsMobile()
+  window.addEventListener('resize', updateIsMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile)
+})
+
+const columns = computed(() => [
   {
     header: '이름',
     accessorKey: 'name',
     id: 'name',
     align: 'center',
-    width: 140,
+    width: isMobile.value ? 75 : 140,
     cell: ({ row }) => h('span', { class: 'member-name-link', onClick: () => onClickPopup(row.original) }, row.original.name),
   },
   {
@@ -107,7 +124,7 @@ const columns = [
     accessorKey: 'status',
     id: 'status',
     align: 'center',
-    width: 130,
+    width: isMobile.value ? 70 : 130,
     formatter: ({ value }) => memberStatusMap.get(value) || value,
   },
   {
@@ -115,17 +132,18 @@ const columns = [
     accessorKey: 'last_attend',
     id: 'last_attend',
     align: 'center',
+    width: isMobile.value ? 145 : 220,
     cell: ({ row }) => {
       const val = row.original.last_attend
       if (!val) return ''
-      const formattedDate = useDate.format(val, 'yyyy년 MM월 dd일')
+      const formattedDate = isMobile.value ? useDate.format(val, 'yyyy.MM.dd') : useDate.format(val, 'yyyy년 MM월 dd일')
       const weekCnt = useDate.diff(val, 'weeks')
       const colorClass = weekCnt < 4 ? 'green' : weekCnt < 12 ? 'orange' : 'out'
       const icon = weekCnt < 4 ? '✓' : weekCnt < 12 ? '⚠️' : '🚨'
       return h('span', { class: ['attend-badge', colorClass] }, `${icon} ${formattedDate}`)
     },
   },
-]
+])
 
 const isOpenMember = ref(false)
 const rowData = ref()

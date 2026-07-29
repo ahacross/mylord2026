@@ -10,6 +10,7 @@ import viteCompression from 'vite-plugin-compression'
 export default defineConfig({
   base: '/seat/',
   resolve: {
+    dedupe: ['vue', 'pinia', 'vue-router'],
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
@@ -46,20 +47,7 @@ export default defineConfig({
   build: {
     modulePreload: false,
     chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            // Vue 핵심 모듈들 단일 청크로 결합
-            if (id.includes('vue') || id.includes('pinia') || id.includes('vue-router')) {
-              return 'vendor-vue-core'
-            }
-            // 기타 html2canvas 등의 일반 서드파티 라이브러리
-            return 'vendor-libs'
-          }
-        },
-      },
-    },
+
   },
   preview: {
     headers: {

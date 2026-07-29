@@ -269,3 +269,57 @@
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
+
+/* 모바일 반응형 스타일 추가 */
+@media (max-width: 640px) {
+  .dashboard-container {
+    padding: 0.75rem 0.5rem;
+    gap: 1.5rem;
+  }
+
+  .welcome-banner {
+    padding: 1.25rem 1rem;
+    border-radius: 18px;
+
+    .welcome-title {
+      font-size: 1.25rem;
+    }
+
+    .welcome-logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    .welcome-subtitle {
+      font-size: 0.85rem;
+    }
+  }
+
+  .stat-card {
+    padding: 1rem 0.75rem;
+    border-radius: 18px;
+  }
+
+  .chart-body-wrapper {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .quick-links-grid {
+    grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .quick-btn {
+    padding: 1rem 0.25rem;
+    border-radius: 16px;
+
+    .quick-icon {
+      font-size: 1.5rem;
+    }
+
+    .quick-text {
+      font-size: 0.78rem;
+    }
+  }
+}

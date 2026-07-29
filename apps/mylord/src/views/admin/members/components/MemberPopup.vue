@@ -150,6 +150,15 @@ const makeParams = () => {
     }
   })
 
+  if (params.phone) {
+    const phone = String(params.phone).trim()
+    if (phone && !phone.includes('-')) {
+      params.phone = phone
+        .replace(/[^0-9]/g, '')
+        .replace(/^(010)(\d{3,4})(\d{4})$/, '$1-$2-$3')
+    }
+  }
+
   return params
 }
 

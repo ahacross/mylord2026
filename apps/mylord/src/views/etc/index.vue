@@ -3,12 +3,14 @@
     <div class="etc-card">
       <!-- 카드 헤더 영역 -->
       <div class="card-header">
-        <div class="header-badge">
-          <span class="header-icon">📋</span>
-        </div>
-        <div class="header-info">
-          <h1 class="page-title">기타 안내 및 정보</h1>
-          <p class="page-subtitle">마이로드 찬양대의 정관 문서 및 주요 장소 안내 정보입니다.</p>
+        <div class="header-left">
+          <div class="header-badge">
+            <span class="header-icon">📋</span>
+          </div>
+          <div class="header-info">
+            <h1 class="page-title">기타 안내 및 정보</h1>
+            <p class="page-subtitle">마이로드 찬양대의 정관 문서 및 주요 장소 안내 정보입니다.</p>
+          </div>
         </div>
       </div>
 

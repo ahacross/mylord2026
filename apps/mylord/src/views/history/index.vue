@@ -1,9 +1,9 @@
 <template>
   <div
     class="page-container"
-    style="display: flex; flex-direction: column; flex: 1; height: 100%; width: 100%; padding: 0; box-sizing: border-box; overflow: hidden"
+    style="display: flex; flex-direction: column; flex: 1; min-height: 100%; width: 100%; padding: 0; box-sizing: border-box; overflow: auto"
   >
-    <TankTable :data="tableData" :columns="columns" name="부른 찬양들" @click:cell="onClickCell">
+    <TankTable :data="tableData" :columns="columns" name="찬양들" @click:cell="onClickCell">
       <template #btn-after>
         <button v-if="$storeAuth === 'admin'" class="btn-action btn-primary" @click="openHistory()">
           <span>+ 추가</span>
@@ -45,26 +45,54 @@ const openHistory = (row = null) => {
 
 const isOpenPart = ref(false)
 
-const columns = [
-  { header: '부른 날', id: 'praised_day', width: 120, align: 'center' },
+const isMobile = ref(false)
+
+const updateIsMobile = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth <= 640
+  }
+}
+
+onMounted(() => {
+  updateIsMobile()
+  window.addEventListener('resize', updateIsMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile)
+})
+
+const columns = computed(() => [
+  {
+    header: isMobile.value ? '날짜' : '부른 날',
+    id: 'praised_day',
+    width: isMobile.value ? 86 : 110,
+    align: 'center',
+    formatter: ({ value }) => {
+      if (!value) return ''
+      return String(value).replaceAll('-', '.')
+    },
+  },
   { header: '제목', id: 'title' },
   {
     header: '영상',
     id: 'url',
     align: 'center',
-    width: 80,
+    width: isMobile.value ? 42 : 75,
     className: 'underBarNone',
-    formatter: ({ value }) => (value ? `<button class="btn-cell btn-cell-video"><span class="btn-icon">▶</span><span>영상</span></button>` : ''),
+    formatter: ({ value }) =>
+      value ? `<button class="btn-cell btn-cell-video" title="영상"><span class="btn-icon">▶</span><span class="btn-text">영상</span></button>` : '',
   },
   {
     header: '연습',
     id: 'practice_url',
     align: 'center',
-    width: 80,
+    width: isMobile.value ? 42 : 75,
     className: 'underBarNone',
-    formatter: ({ value }) => (value ? `<button class="btn-cell btn-cell-practice"><span class="btn-icon">🎵</span><span>연습</span></button>` : ''),
+    formatter: ({ value }) =>
+      value ? `<button class="btn-cell btn-cell-practice" title="연습"><span class="btn-icon">🎵</span><span class="btn-text">연습</span></button>` : '',
   },
-]
+])
 
 const open = (url) => window.open(url, '_blank')
 

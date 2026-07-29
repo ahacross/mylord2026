@@ -3,12 +3,14 @@
     <div class="edit-card">
       <!-- 헤더 프로필 & 정보 타이틀 -->
       <div class="card-header">
-        <div class="avatar-badge">
-          <span class="avatar-icon">👤</span>
-        </div>
-        <div class="header-info">
-          <h1 class="page-title">개인정보 수정</h1>
-          <p class="page-subtitle">마이로드 대원 정보(이름, 연락처, 생일)를 최신으로 관리하세요.</p>
+        <div class="header-left">
+          <div class="avatar-badge">
+            <span class="avatar-icon">👤</span>
+          </div>
+          <div class="header-info">
+            <h1 class="page-title">개인정보 수정</h1>
+            <p class="page-subtitle">마이로드 대원 정보(이름, 연락처, 생일)를 최신으로 관리하세요.</p>
+          </div>
         </div>
       </div>
 

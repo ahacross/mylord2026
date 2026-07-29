@@ -8,6 +8,7 @@ interface DialogOptions {
   msg: string
   confirmTxt?: string
   cancelTxt?: string
+  useHistory?: boolean
 }
 
 const Dialog =

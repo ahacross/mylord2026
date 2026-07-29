@@ -90,6 +90,20 @@ const chartData = ref({
   groups: [],
 })
 const chartWidth = ref(600) // 대시보드 카드 레이아웃에 최적화된 가로 너비
+
+const updateChartWidth = () => {
+  if (typeof window !== 'undefined') {
+    const screenWidth = window.innerWidth
+    if (screenWidth < 640) {
+      chartWidth.value = Math.max(280, screenWidth - 64)
+    } else if (screenWidth < 960) {
+      chartWidth.value = Math.max(400, screenWidth - 120)
+    } else {
+      chartWidth.value = 600
+    }
+  }
+}
+
 const { refetch } = useQuery({
   queryFn: async () => {
     if (!member_id) return
@@ -104,7 +118,15 @@ const { refetch } = useQuery({
   },
 })
 
-onMounted(refetch)
+onMounted(() => {
+  updateChartWidth()
+  window.addEventListener('resize', updateChartWidth)
+  refetch()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateChartWidth)
+})
 </script>
 
 <style scoped lang="scss" src="@/assets/scss/IndexPage.scss"></style>

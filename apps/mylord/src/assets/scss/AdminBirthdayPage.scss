@@ -107,4 +107,32 @@
 .table-container {
   width: 100%;
   min-height: 300px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .birthday-page-container {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .birthday-card-wrapper {
+    padding: 1.25rem 0.85rem;
+    border-radius: 16px;
+    gap: 1rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-group {
+    width: 100%;
+    flex-wrap: wrap;
+
+    .month-picker {
+      width: 100%;
+    }
+  }
 }

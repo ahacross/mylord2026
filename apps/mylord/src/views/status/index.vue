@@ -3,12 +3,14 @@
     <div class="status-card-wrapper">
       <!-- 카드 헤더 영역 -->
       <div class="card-header">
-        <div class="header-badge">
-          <span class="header-icon">📊</span>
-        </div>
-        <div class="header-info">
-          <h1 class="page-title">나의 출석 & 회비 현황</h1>
-          <p class="page-subtitle">최근 출석률 및 올해 회비 납부 내역을 한눈에 확인해보세요.</p>
+        <div class="header-left">
+          <div class="header-badge">
+            <span class="header-icon">📊</span>
+          </div>
+          <div class="header-info">
+            <h1 class="page-title">나의 출석 & 회비 현황</h1>
+            <p class="page-subtitle">최근 출석률 및 올해 회비 납부 내역을 한눈에 확인해보세요.</p>
+          </div>
         </div>
       </div>
 

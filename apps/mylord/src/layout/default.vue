@@ -306,21 +306,35 @@ onMounted(async () => {
 .app-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
-  width: 100vw;
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* 본문 레이아웃 패딩 */
 .custom-page-container {
   flex: 1;
-  height: calc(100vh - 64px);
-  overflow: hidden;
-  padding: 0.75rem 1rem;
+  width: 100%;
   box-sizing: border-box;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .custom-page-container {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .drawer-body {
+    width: 82vw;
+    max-width: 300px;
+  }
 }
 
 /* --- 모던 로그인 팝업 모달 스타일 --- */
@@ -350,16 +364,16 @@ onMounted(async () => {
   position: relative;
   background: #ffffff;
   border-radius: 24px;
-  width: 100%;
+  width: calc(100% - 2rem);
   max-width: 380px;
-  padding: 2rem 1.5rem;
+  padding: 1.75rem 1.25rem;
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
   box-sizing: border-box;
   animation: modalScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  margin: 1.5rem;
+  margin: 1rem;
 }
 
 .modal-header {

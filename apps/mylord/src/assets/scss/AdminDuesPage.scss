@@ -133,6 +133,8 @@
 .table-container {
   width: 100%;
   min-height: 300px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* 스태퍼 구조: [버튼] - 10px - [12개월] - 10px - [버튼] */
@@ -198,5 +200,65 @@
     background-color: #d1fae5; /* 👈 완납 시 납부 현황 뱃지만 초록색 배경 */
     color: #047857;
     border: 1px solid #6ee7b7;
+  }
+}
+
+@media (max-width: 640px) {
+  .dues-page-container {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .dues-card-wrapper {
+    padding: 1.25rem 0.85rem;
+    border-radius: 16px;
+    gap: 1rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .part-tab-bar {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .part-tab-btn {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    flex: 1 0 auto;
+  }
+
+  .dues-stepper {
+    gap: 4px;
+    padding: 2px 4px;
+
+    .stepper-btn {
+      width: 24px;
+      height: 24px;
+      font-size: 13px;
+    }
+
+    .stepper-value {
+      min-width: 40px;
+      font-size: 0.8rem;
+    }
+  }
+
+  .dues-progress-badge {
+    padding: 4px 8px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  :deep(th) {
+    padding: 8px 3px !important;
+    font-size: 0.8rem !important;
+  }
+  :deep(td) {
+    padding: 8px 3px !important;
+    font-size: 0.8rem !important;
   }
 }
