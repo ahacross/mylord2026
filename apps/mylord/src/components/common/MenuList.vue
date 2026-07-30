@@ -110,7 +110,7 @@ const onClickMove = (name) => {
 .custom-menu-list {
   list-style: none;
   padding: 0;
-  margin: 1.5rem 0;
+  margin: 0.5rem 0 1.5rem 0;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;

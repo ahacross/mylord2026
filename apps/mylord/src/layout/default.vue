@@ -17,7 +17,7 @@
 
     <!-- 사이드 메뉴 (드로어) -->
     <div :class="['custom-drawer-container', { open: drawerOpen }]">
-      <div class="drawer-overlay" @click="closeDrawer"></div>
+      <div class="drawer-overlay" @click="closeDrawer" @touchmove.prevent></div>
       <div class="drawer-body">
         <div v-if="info?.name" class="user-profile-badge">
           <span class="avatar-icon">👤</span>
@@ -30,7 +30,9 @@
 
         <hr class="drawer-divider" />
 
-        <MenuList />
+        <div class="drawer-menu-wrapper">
+          <MenuList />
+        </div>
       </div>
     </div>
 
@@ -83,6 +85,26 @@ const { drawerOpen } = storeToRefs(storeCommon)
 
 const toggleLeftDrawer = () => storeCommon.setDrawerOpen(!storeCommon.drawerOpen)
 const closeDrawer = () => storeCommon.setDrawerOpen(false)
+
+watch(
+  drawerOpen,
+  (isOpen) => {
+    if (typeof document !== 'undefined') {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = ''
+      }
+    }
+  },
+  { immediate: true }
+)
+
+onUnmounted(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = ''
+  }
+})
 
 const onClickLogout = async () => {
   if (confirm('로그아웃 하시겠습니까?')) {
@@ -180,6 +202,8 @@ onMounted(async () => {
   left: 0;
   width: 280px;
   height: 100%;
+  max-height: 100vh;
+  max-height: 100dvh;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-right: 1px solid rgba(0, 0, 0, 0.05);
@@ -188,8 +212,17 @@ onMounted(async () => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 0 0;
   box-sizing: border-box;
+  overscroll-behavior: contain;
+}
+
+.drawer-menu-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: 1.5rem;
 }
 
 .custom-drawer-container.open .drawer-body {
