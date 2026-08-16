@@ -45,6 +45,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    'accounting': RouteRecordInfo<
+      'accounting',
+      '/admin/accounting',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     'attendance': RouteRecordInfo<
       'attendance',
       '/admin/attendance',
@@ -160,6 +167,14 @@ declare module 'vue-router/auto-routes' {
     'src/views/ErrorNotFound.vue': {
       routes:
         | 'not-found'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'src/views/admin/accounting.vue': {
+      routes:
+        | 'accounting'
       views:
         | never
       pathParamNames:

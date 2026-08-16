@@ -51,3 +51,4 @@ minimumReleaseAgeExclude:
   - vue-tsc@3.3.8
   - '@tanstack/virtual-core@3.17.6'
   - '@tanstack/vue-virtual@3.13.34'
+  - vite@8.2.0

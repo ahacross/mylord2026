@@ -69,8 +69,8 @@ useQuery({
       columns.value = res.map((item) => {
         if (!item || !item.length) return []
         let { before_rate: before, after_rate: after } = item.at(0)
-        before = Number(String(before).replace('%', ''))
-        after = Number(String(after).replace('%', ''))
+        before = Math.min(100, Math.max(0, Number(String(before).replace('%', ''))))
+        after = Math.min(100, Math.max(0, Number(String(after).replace('%', ''))))
         return [
           [`예배전_${before}`, before],
           [`예배후_${after}`, after],

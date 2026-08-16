@@ -83,9 +83,11 @@ const drawChart = () => {
     props.columns.forEach((col) => {
       const name = String(col[0]);
       if (isMultiCategory) {
-        row[name] = typeof col[catIdx + 1] === "number" ? col[catIdx + 1] : parseFloat(col[catIdx + 1]) || 0;
+        const rawVal = typeof col[catIdx + 1] === "number" ? col[catIdx + 1] : parseFloat(col[catIdx + 1]) || 0;
+        row[name] = Math.min(100, Math.max(0, rawVal));
       } else {
-        row[name] = typeof col[1] === "number" ? col[1] : parseFloat(col[1]) || 0;
+        const rawVal = typeof col[1] === "number" ? col[1] : parseFloat(col[1]) || 0;
+        row[name] = Math.min(100, Math.max(0, rawVal));
       }
     });
     return row;

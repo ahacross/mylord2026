@@ -110,10 +110,10 @@ const { refetch } = useQuery({
     const res = await apiGetStatus({ member_id })
     if (!res || !Array.isArray(res)) return
 
-    // [데이터 연동 가이드]
+    // [데이터 연동] 100% 초과 방지 클램핑 처리
     chartData.value.columns = [
-      ['예배 전', ...res.map((item) => Number(item.at(0).before_rate.replace('%', '')))],
-      ['예배 후', ...res.map((item) => Number(item.at(0).after_rate.replace('%', '')))],
+      ['예배 전', ...res.map((item) => Math.min(100, Math.max(0, Number(item.at(0).before_rate.replace('%', '')))))],
+      ['예배 후', ...res.map((item) => Math.min(100, Math.max(0, Number(item.at(0).after_rate.replace('%', '')))))],
     ]
   },
 })

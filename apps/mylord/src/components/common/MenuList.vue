@@ -83,6 +83,11 @@ const adminMenus = [
     pathName: 'seat',
     icon: 'chair_alt',
   },
+  {
+    title: '회계 보고',
+    pathName: 'accounting',
+    icon: 'receipt_long',
+  },
 ]
 
 const activeMenus = computed(() => {

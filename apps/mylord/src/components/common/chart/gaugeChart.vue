@@ -44,11 +44,12 @@ const parsedData = computed(() => {
     if (label.includes("_")) {
       label = label.split("_")[0];
     }
+    const rawVal = typeof val === 'number' ? val : parseFloat(val) || 0
     return {
       label,
-      value: typeof val === "number" ? val : parseFloat(val) || 0,
+      value: Math.min(100, Math.max(0, rawVal)),
       color: COLOR_PALETTE[index % COLOR_PALETTE.length],
-    };
+    }
   });
 });
 
