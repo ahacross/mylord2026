@@ -2,6 +2,8 @@
   <div
     class="page-container"
     style="display: flex; flex-direction: column; flex: 1; min-height: 100%; width: 100%; padding: 0; box-sizing: border-box; overflow: auto"
+    @touchstart.passive="onTouchStart"
+    @touchmove.passive="onTouchMove"
   >
     <TankTable :data="tableData" :columns="columns" name="찬양들" @click:cell="onClickCell">
       <template #btn-after>
@@ -73,7 +75,15 @@ const columns = computed(() => [
       return String(value).replaceAll('-', '.')
     },
   },
-  { header: '제목', id: 'title' },
+  {
+    header: '제목',
+    id: 'title',
+    className: 'col-title',
+    formatter: ({ value }) => {
+      if (!value) return ''
+      return `<div class="title-scroll-wrapper"><span class="title-scroll-text">${value}</span></div>`
+    },
+  },
   {
     header: '영상',
     id: 'url',
@@ -96,7 +106,33 @@ const columns = computed(() => [
 
 const open = (url) => window.open(url, '_blank')
 
+let touchStartX = 0
+let touchStartY = 0
+let isTouchDragging = false
+
+const onTouchStart = (e) => {
+  if (e.touches && e.touches.length > 0) {
+    touchStartX = e.touches[0].clientX
+    touchStartY = e.touches[0].clientY
+    isTouchDragging = false
+  }
+}
+
+const onTouchMove = (e) => {
+  if (e.touches && e.touches.length > 0) {
+    const diffX = Math.abs(e.touches[0].clientX - touchStartX)
+    const diffY = Math.abs(e.touches[0].clientY - touchStartY)
+    if (diffX > 8 || diffY > 8) {
+      isTouchDragging = true
+    }
+  }
+}
+
 const onClickCell = ({ columnName, rowKey }) => {
+  if (isTouchDragging) {
+    isTouchDragging = false
+    return
+  }
   const row = tableData.value.at(rowKey)
   if (!row) return
   selectedRow.value = row

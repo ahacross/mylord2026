@@ -1,6 +1,6 @@
 {
   "name": "mylord-root",
-  "version": "0.0.86",
+  "version": "0.0.98",
   "private": true,
   "type": "module",
   "scripts": {
@@ -41,5 +41,5 @@
   "engines": {
     "node": ">=20.19.0"
   },
-  "packageManager": "pnpm@11.13.0"
+  "packageManager": "pnpm@10.6.1"
 }

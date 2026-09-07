@@ -79,6 +79,38 @@
   line-height: 1;
 }
 
+/* 찬양 곡명(제목) 가로 스크롤 스타일 (... 제거 후 밀어서 볼 수 있도록 처리) */
+:deep(.v-td.col-title),
+:deep(.v-td[data-column-id='title']) {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  min-width: 0 !important;
+  padding-right: 2px !important;
+}
+
+:deep(.title-scroll-wrapper) {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  .title-scroll-text {
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 14px; /* 끝까지 밀었을 때 여유 공간 */
+  }
+}
+
 @media (max-width: 640px) {
   :deep(.btn-cell) {
     padding: 5px;
@@ -97,14 +129,16 @@
     }
   }
 
+  :deep(.v-th),
   :deep(th) {
-    padding: 6px 2px !important;
+    padding: 6px 4px !important;
     font-size: 0.8rem !important;
     white-space: nowrap;
   }
+  :deep(.v-td),
   :deep(td) {
-    padding: 6px 2px !important;
-    font-size: 0.8rem !important;
+    padding: 6px 4px !important;
+    font-size: 0.82rem !important;
     white-space: nowrap;
   }
 }

@@ -148,6 +148,8 @@
               v-for="cell in table.getRowModel().rows[virtualRow.index]?.getVisibleCells() ?? []"
               :key="cell.id"
               class="v-td"
+              :class="[(cell.column.columnDef as any).className, `col-${cell.column.id}`]"
+              :data-column-id="cell.column.id"
               :style="getColumnStyle(cell.column)"
               @click="handleCellClick(cell, virtualRow.index)"
               @dblclick="startEdit(virtualRow.index, cell.column.id, cell.getValue(), cell.column.columnDef)"

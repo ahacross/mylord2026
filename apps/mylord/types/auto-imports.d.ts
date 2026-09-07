@@ -6,6 +6,7 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const DEFAULT_SEARCH_PREFIX: typeof import('../src/apis/youtube').DEFAULT_SEARCH_PREFIX
   const EffectScope: typeof import('vue').EffectScope
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const api: typeof import('@common/api').api
@@ -44,6 +45,8 @@ declare global {
   const apiStatTot: typeof import('../src/apis/stat').apiStatTot
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
+  const buildPartSearchQuery: typeof import('../src/apis/youtube').buildPartSearchQuery
+  const buildSearchQuery: typeof import('../src/apis/youtube').buildSearchQuery
   const computed: typeof import('vue').computed
   const computedAsync: typeof import('@vueuse/core').computedAsync
   const computedEager: typeof import('@vueuse/core').computedEager
@@ -79,6 +82,8 @@ declare global {
   const getCurrentScope: typeof import('vue').getCurrentScope
   const getCurrentWatcher: typeof import('vue').getCurrentWatcher
   const getSafeDialogStore: typeof import('@common/form/dialog').getSafeDialogStore
+  const getStoredApiKey: typeof import('../src/apis/youtube').getStoredApiKey
+  const getStoredSearchPrefix: typeof import('../src/apis/youtube').getStoredSearchPrefix
   const h: typeof import('vue').h
   const ignorableWatch: typeof import('@vueuse/core').ignorableWatch
   const inject: typeof import('vue').inject
@@ -122,6 +127,7 @@ declare global {
   const pausableWatch: typeof import('@vueuse/core').pausableWatch
   const provide: typeof import('vue').provide
   const provideLocal: typeof import('@vueuse/core').provideLocal
+  const rankYoutubeSearchResults: typeof import('../src/apis/youtube').rankYoutubeSearchResults
   const reactify: typeof import('@vueuse/core').reactify
   const reactifyObject: typeof import('@vueuse/core').reactifyObject
   const reactive: typeof import('vue').reactive
@@ -137,9 +143,12 @@ declare global {
   const refThrottled: typeof import('@vueuse/core').refThrottled
   const refWithControl: typeof import('@vueuse/core').refWithControl
   const resolveComponent: typeof import('vue').resolveComponent
+  const searchYoutubeVideos: typeof import('../src/apis/youtube').searchYoutubeVideos
   const setActivePinia: typeof import('pinia').setActivePinia
   const setMapStoreSuffix: typeof import('pinia').setMapStoreSuffix
   const setQuasar: typeof import('../src/composables/dialog2.js').setQuasar
+  const setStoredApiKey: typeof import('../src/apis/youtube').setStoredApiKey
+  const setStoredSearchPrefix: typeof import('../src/apis/youtube').setStoredSearchPrefix
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
   const shallowRef: typeof import('vue').shallowRef
@@ -368,6 +377,9 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { YouTubeSearchResult, SearchRankingCriteria } from '../src/apis/youtube'
+  import('../src/apis/youtube')
 }
 
 // for vue template auto import
@@ -375,6 +387,7 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
+    readonly DEFAULT_SEARCH_PREFIX: UnwrapRef<typeof import('../src/apis/youtube')['DEFAULT_SEARCH_PREFIX']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly api: UnwrapRef<typeof import('@common/api')['api']>
@@ -413,6 +426,8 @@ declare module 'vue' {
     readonly apiStatTot: UnwrapRef<typeof import('../src/apis/stat')['apiStatTot']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly buildPartSearchQuery: UnwrapRef<typeof import('../src/apis/youtube')['buildPartSearchQuery']>
+    readonly buildSearchQuery: UnwrapRef<typeof import('../src/apis/youtube')['buildSearchQuery']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -447,6 +462,8 @@ declare module 'vue' {
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
+    readonly getStoredApiKey: UnwrapRef<typeof import('../src/apis/youtube')['getStoredApiKey']>
+    readonly getStoredSearchPrefix: UnwrapRef<typeof import('../src/apis/youtube')['getStoredSearchPrefix']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -490,6 +507,7 @@ declare module 'vue' {
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
+    readonly rankYoutubeSearchResults: UnwrapRef<typeof import('../src/apis/youtube')['rankYoutubeSearchResults']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
     readonly reactifyObject: UnwrapRef<typeof import('@vueuse/core')['reactifyObject']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -505,8 +523,11 @@ declare module 'vue' {
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
+    readonly searchYoutubeVideos: UnwrapRef<typeof import('../src/apis/youtube')['searchYoutubeVideos']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
+    readonly setStoredApiKey: UnwrapRef<typeof import('../src/apis/youtube')['setStoredApiKey']>
+    readonly setStoredSearchPrefix: UnwrapRef<typeof import('../src/apis/youtube')['setStoredSearchPrefix']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
